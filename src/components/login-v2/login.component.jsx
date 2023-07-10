@@ -143,12 +143,11 @@ export const Login = () => {
             marginTop: 8,
             display: "flex",
             flexDirection: "column",
-            height: "63vh",
             alignItems: "center",
             justifyContent: "center",
             border: 1,
             borderRadius: "6px",
-            padding: "0 30px",
+            padding: "16px 30px",
           }}
         >
           <div className="login-container__rive-container">
