@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setUser as setUserAction } from "reducers/authSlice";
 // Material UI
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import LoadingButton from "@mui/lab/LoadingButton";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -134,12 +133,12 @@ export const Login = () => {
           marginTop: 8,
           display: "flex",
           flexDirection: "column",
-          height: "82vh",
+          height: "80vh",
           alignItems: "center",
           justifyContent: "center",
           border: "1px solid rgba(255, 255, 255, 0.22)",
           borderRadius: "6px",
-          padding: "0 20px",
+          padding: "0 30px",
         }}
       >
         <div className="login-container__rive-container">

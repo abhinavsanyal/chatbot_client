@@ -6,17 +6,17 @@ import { useSelector } from "react-redux";
 import instance from "api";
 import routes from "routes";
 import { Login } from "./components";
+import Fab from "@mui/material/Fab";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 function App() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const user = useSelector((state) => state.auth.user);
-
-  const darkTheme = createTheme({
-    palette: {
-      mode: "dark",
-    },
-  });
+  const [appTheme, setAppTheme] = useState("dark");
+  const toggleTheme = () => {
+    setAppTheme(appTheme === "dark" ? "light" : "dark");
+  };
 
   useEffect(() => {
     if (isLoggedIn && user) {
@@ -61,7 +61,25 @@ function App() {
 
   return (
     <div className="App">
-      <ThemeProvider theme={darkTheme}>
+      <ThemeProvider
+        theme={createTheme({
+          palette: {
+            mode: appTheme,
+          },
+        })}
+      >
+        {/* <Fab variant="extended" size="medium">
+          <Brightness4Icon />
+        </Fab> */}
+        <Fab
+          size="small"
+          sx={{ position: "absolute", top: 10, right: 10 }}
+          color="primary"
+          aria-label="add"
+          onClick={toggleTheme}
+        >
+          <Brightness4Icon toggleTheme />
+        </Fab>
         <Routes>
           {getRoutes(routes)}
           <Route path="*" element={<Navigate to="/login" />} />
