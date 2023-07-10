@@ -10,7 +10,7 @@ export const SearchBar = () => {
   };
 
   return (
-    <Container maxWidth="md" sx={{ mt: 20 }}>
+    <Container maxWidth="md" sx={{ mt: 20, mb: 5 }}>
       <TextField
         id="search"
         type="search"

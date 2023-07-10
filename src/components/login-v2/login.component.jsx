@@ -136,7 +136,7 @@ export const Login = () => {
           height: "80vh",
           alignItems: "center",
           justifyContent: "center",
-          border: "1px solid rgba(255, 255, 255, 0.22)",
+          border: 1,
           borderRadius: "6px",
           padding: "0 30px",
         }}

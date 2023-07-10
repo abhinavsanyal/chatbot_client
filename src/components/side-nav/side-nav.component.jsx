@@ -15,8 +15,6 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
 import HistoryIcon from "@mui/icons-material/History";
 import Button from "@mui/material/Button";
@@ -130,6 +128,7 @@ export const SideNav = () => {
         openProfilePopUp={openProfilePopUp}
         setOpenProfilePopUp={setOpenProfilePopUp}
       />
+    
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
           {open && (
@@ -144,6 +143,7 @@ export const SideNav = () => {
             {open ? <ChevronLeftIcon /> : <MenuIcon />}
           </IconButton>
         </DrawerHeader>
+
         <Divider />
         <Box
           component="main"

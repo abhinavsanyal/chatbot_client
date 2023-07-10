@@ -1,4 +1,6 @@
 import * as React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setCompany } from "reducers/app-config-slice";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Typography from "@mui/material/Typography";
@@ -6,6 +8,49 @@ import Typography from "@mui/material/Typography";
 import { SideNav } from "../side-nav/side-nav.component";
 import { AvatarUi } from "../avatar-ui/avatar-ui.component";
 import { SearchBar } from "../search-bar/search-bar.component";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+
+export const CompanySelector = () => {
+  const appConfigStore = useSelector((state) => state.appConfig);
+  const dispatch = useDispatch();
+
+  const onCompanyChange = (event) => {
+    dispatch(setCompany(event.target.value));
+  };
+
+  return (
+    <Box
+      sx={{
+        top: "8px",
+        left: "270px",
+        width: "100%",
+        maxWidth: "200px",
+      }}
+    >
+      {appConfigStore?.companies?.length && (
+        <FormControl fullWidth size="small" sx={{ height: 0 }}>
+          <InputLabel id="demo-simple-select-label">Company</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            defaultValue=""
+            value={appConfigStore?.selected_company}
+            onChange={onCompanyChange}
+          >
+            {appConfigStore?.companies?.map((companyName, idx) => (
+              <MenuItem key={idx} value={companyName || ""}>
+                {companyName || ""}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      )}
+    </Box>
+  );
+};
 
 export const Dashboard = () => {
   return (
@@ -14,20 +59,21 @@ export const Dashboard = () => {
       {/* Side navigation panel */}
       <SideNav />
       {/* Main right container */}
+
       <Box
         component="main"
         sx={{
           display: "flex",
           flexGrow: 1,
-          p: 3,
+          p: 2,
           flexDirection: "column",
-          alignItems: "center",
           justifyContent: "space-between",
           width: "100%",
-          height: "100vh"
+          height: "100vh",
         }}
       >
-        <AvatarUi/>
+        <CompanySelector />
+        <AvatarUi />
         <Typography paragraph>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus
