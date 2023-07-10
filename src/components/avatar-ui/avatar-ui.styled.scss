@@ -3,9 +3,10 @@
     top: -10%;
     right: -14%;
     transform: scale(0.5);
-    transition: all 0.3s ease-in-out;
+    transition: all 0.3s  cubic-bezier(.41,.64,.79,.81);
 }
 
 #video-wrapper{
-    transition: all 0.3s ease-in-out;
+    transition: all 0.3s  cubic-bezier(.41,.64,.79,.81);
+    // transition: position 3s, top 3s, right 3s;
 }

@@ -536,18 +536,7 @@ export const AvatarUi = ({ isShrinked, onShrink }) => {
           </div>
         )}
       </div> */}
-      <div
-        style={{
-          height: "107px",
-          overflowY: "hidden",
-        }}
-        className="flex inset-x-0 bottom-0 w-full pt-6 mb-30 mx-2 justify-start items-center"
-      >
-        {/* <ChatInputBox handleStop={handleStop} /> */}
-        <div className="flex justify-center items-center w-full">
-          {/* <RecordMessage handleStop={handleStop} /> */}
-        </div>
-      </div>
+    
     </div>
   );
 };
