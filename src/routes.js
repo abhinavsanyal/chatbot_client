@@ -6,7 +6,7 @@ const routes = [
     name: "Home",
     key: "dashboard",
     route: "/dashboard",
-    component: <Dashboard />,
+    component: <ChatQnAController />,
     noCollapse: true,
     protected: true,
   },
