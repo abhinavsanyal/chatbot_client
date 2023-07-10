@@ -1,5 +1,4 @@
-import { Login, ChatQnAController } from "./components";
-
+import { Login, ChatQnAController, Dashboard } from "./components";
 
 const routes = [
   {
@@ -7,10 +6,10 @@ const routes = [
     name: "Home",
     key: "dashboard",
     route: "/dashboard",
-    component: <ChatQnAController />,
+    component: <Dashboard />,
     noCollapse: true,
     protected: true,
-  }
+  },
 ];
 
 export default routes;
