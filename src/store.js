@@ -1,13 +1,13 @@
 // src/store.js
-import { configureStore } from '@reduxjs/toolkit';
-import { persistReducer , persistStore} from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
-import rootReducer from './reducers';
+import { configureStore } from "@reduxjs/toolkit";
+import { persistReducer, persistStore } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import rootReducer from "./reducers";
 
 const persistConfig = {
-  key: 'root',
+  key: "root",
   storage,
-  whitelist: ['auth'],
+  whitelist: ["auth", "appConfig", "chat"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -22,4 +22,4 @@ const store = configureStore({
 
 const persistor = persistStore(store);
 
-export {store, persistor}
+export { store, persistor };
