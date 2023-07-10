@@ -1,6 +1,7 @@
 import { Container, InputAdornment, TextField } from "@mui/material";
 import { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
+import "./index.scss";
 
 export const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -16,7 +17,11 @@ export const SearchBar = () => {
         type="search"
         value={searchTerm}
         onChange={handleChange}
-        sx={{ width: '100%', borderRadius: '10px' }}
+        sx={{
+          width: "100%",
+          borderRadius: "34px !important",
+          backgroundColor: "#eee",
+        }}
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">

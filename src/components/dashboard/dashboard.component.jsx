@@ -4,6 +4,7 @@ import { setCompany } from "reducers/app-config-slice";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 
 import { SideNav } from "../side-nav/side-nav.component";
 import { AvatarUi } from "../avatar-ui/avatar-ui.component";
@@ -53,6 +54,14 @@ export const CompanySelector = () => {
 };
 
 export const Dashboard = () => {
+  const [isShrinked, setIsShrinked] = React.useState(false);
+  const onExpand = () => {
+    setIsShrinked(false);
+  };
+  const onShrink = () => {
+    setIsShrinked(true);
+  };
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -74,6 +83,16 @@ export const Dashboard = () => {
       >
         <CompanySelector />
         <AvatarUi />
+        <Button
+          variant="outlined"
+          onClick={() => {
+            setIsShrinked(!isShrinked);
+          }}
+        >
+          {isShrinked ? "Expand" : "Shrink"}
+        </Button>
+
+        <AvatarUi onShrink={onShrink} isShrinked={isShrinked} />
         <Typography paragraph>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus
