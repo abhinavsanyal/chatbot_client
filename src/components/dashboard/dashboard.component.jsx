@@ -82,15 +82,15 @@ export const Dashboard = () => {
         }}
       >
         <CompanySelector />
-        <AvatarUi />
-        <Button
+        {/* <AvatarUi /> */}
+        {/* <Button
           variant="outlined"
           onClick={() => {
             setIsShrinked(!isShrinked);
           }}
         >
           {isShrinked ? "Expand" : "Shrink"}
-        </Button>
+        </Button> */}
 
         <AvatarUi onShrink={onShrink} isShrinked={isShrinked} />
         <Typography paragraph>

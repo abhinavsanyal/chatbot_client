@@ -1,11 +1,13 @@
 // src/reducers/index.js
 import { combineReducers } from "@reduxjs/toolkit";
 import authReducer from "./authSlice";
-import appConfig from "./app-config-slice";
+import appConfigReducer from "./app-config-slice";
+import chatReducer from "./chat-slice";
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  appConfig: appConfig,
+  appConfig: appConfigReducer,
+  chat: chatReducer,
 });
 
 export default rootReducer;

@@ -1,7 +1,7 @@
 import { Container, InputAdornment, TextField } from "@mui/material";
 import { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
-import "./index.scss";
+import { RecordMessage } from "./record-message.component";
 
 export const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -11,17 +11,22 @@ export const SearchBar = () => {
   };
 
   return (
-    <Container maxWidth="md" sx={{ mt: 20, mb: 5 }}>
+    <Container
+      maxWidth="md"
+      sx={{
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        mt: 20,
+        mb: 5,
+      }}
+    >
       <TextField
+        fullWidth
         id="search"
         type="search"
         value={searchTerm}
         onChange={handleChange}
-        sx={{
-          width: "100%",
-          borderRadius: "34px !important",
-          backgroundColor: "#eee",
-        }}
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
@@ -30,6 +35,7 @@ export const SearchBar = () => {
           ),
         }}
       />
+      <RecordMessage />
     </Container>
   );
 };
