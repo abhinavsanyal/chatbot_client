@@ -17,8 +17,8 @@ export const SearchBar = () => {
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
-        mt: 20,
-        mb: 5,
+        mt: 1,
+        mb: 2,
       }}
     >
       <TextField

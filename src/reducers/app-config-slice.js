@@ -11,6 +11,7 @@ const appConfigSlice = createSlice({
   initialState,
   reducers: {
     setCompany: (state, action) => {
+      console.log({state, action})
       state.selected_company = action.payload;
     },
   },

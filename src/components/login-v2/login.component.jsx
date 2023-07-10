@@ -133,79 +133,90 @@ export const Login = () => {
           marginTop: 8,
           display: "flex",
           flexDirection: "column",
-          height: "80vh",
+          height: "85vh",
           alignItems: "center",
           justifyContent: "center",
-          border: 1,
-          borderRadius: "6px",
-          padding: "0 30px",
         }}
       >
-        <div className="login-container__rive-container">
-          <RiveComponent
-            style={{ width: "300px", height: "300px", borderRadius: "50%" }}
-            src="520-990-teddy-login-screen.riv"
-          />
-        </div>
-        <Typography className="pt-4" component="h1" variant="h5">
-          Welcome to Sleek{" "}
-          {/* <img
+        <Box
+          sx={{
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "column",
+            height: "63vh",
+            alignItems: "center",
+            justifyContent: "center",
+            border: 1,
+            borderRadius: "6px",
+            padding: "0 30px",
+          }}
+        >
+          <div className="login-container__rive-container">
+            <RiveComponent
+              style={{ width: "300px", height: "300px", borderRadius: "50%" }}
+              src="520-990-teddy-login-screen.riv"
+            />
+          </div>
+          <Typography className="pt-4" component="h1" variant="h5">
+            Welcome to Sleek{" "}
+            {/* <img
               src={require("assets/images/sleek_logo.png")}
               style={{ display: "inline-block", height: "44px" }}
               alt="sleek_logo"
             />{" "} */}
-          Wizard 🪄
+            Wizard 🪄
+          </Typography>
+
+          <form onSubmit={handleSubmit}>
+            <TextField
+              onChange={(event) => setUser(event.target.value)}
+              onBlur={setToDefaultLook}
+              value={user}
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+            />
+
+            <TextField
+              onChange={(event) => setPassword(event.target.value)}
+              onFocus={() => setHangUp(true)}
+              onBlur={setToDefaultLook}
+              //onE
+              value={password}
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+            />
+
+            <LoadingButton
+              onBlur={setToDefaultLook}
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              disabled={!user || !password}
+              loading={isLogging}
+            >
+              Sign In
+            </LoadingButton>
+
+            {loginError && <Alert severity="error">{loginError}</Alert>}
+          </form>
+        </Box>
+        <Typography className="pt-2 text-center" variant="body2" gutterBottom>
+          Sleek's IndusWolves © 2023
         </Typography>
-
-        <form onSubmit={handleSubmit}>
-          <TextField
-            onChange={(event) => setUser(event.target.value)}
-            onBlur={setToDefaultLook}
-            value={user}
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-          />
-
-          <TextField
-            onChange={(event) => setPassword(event.target.value)}
-            onFocus={() => setHangUp(true)}
-            onBlur={setToDefaultLook}
-            //onE
-            value={password}
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
-
-          <LoadingButton
-            onBlur={setToDefaultLook}
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-            disabled={!user || !password}
-            loading={isLogging}
-          >
-            Sign In
-          </LoadingButton>
-
-          {loginError && <Alert severity="error">{loginError}</Alert>}
-        </form>
       </Box>
-      <Typography className="pt-2 text-center" variant="body2" gutterBottom>
-        Sleek's IndusWolves © 2023
-      </Typography>
     </Container>
   );
 };
