@@ -2,12 +2,21 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 
 import { SideNav } from "../side-nav/side-nav.component";
 import { AvatarUi } from "../avatar-ui/avatar-ui.component";
 import { SearchBar } from "../search-bar/search-bar.component";
 
 export const Dashboard = () => {
+  const [isShrinked, setIsShrinked] = React.useState(false);
+  const onExpand = () => {
+    setIsShrinked(false);
+  };
+  const onShrink = () => {
+    setIsShrinked(true);
+  };
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -24,10 +33,19 @@ export const Dashboard = () => {
           alignItems: "center",
           justifyContent: "space-between",
           width: "100%",
-          height: "100vh"
+          height: "100vh",
         }}
       >
-        <AvatarUi/>
+        <Button
+          variant="outlined"
+          onClick={() => {
+            setIsShrinked(!isShrinked);
+          }}
+        >
+          {isShrinked ? "Expand" : "Shrink"}
+        </Button>
+
+        <AvatarUi onShrink={onShrink} isShrinked={isShrinked} />
         <Typography paragraph>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus

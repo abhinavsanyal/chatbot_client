@@ -1,0 +1,11 @@
+.shrinked{
+    position: absolute !important;
+    top: -10%;
+    right: -14%;
+    transform: scale(0.5);
+    transition: all 0.3s ease-in-out;
+}
+
+#video-wrapper{
+    transition: all 0.3s ease-in-out;
+}

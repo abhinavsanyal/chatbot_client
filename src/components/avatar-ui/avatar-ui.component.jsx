@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Background from "assets/images/bg.png";
 // import RecordMessage from "./record-message.component";
 // import "./video-chat.styled.scss";
+import "./avatar-ui.styled.scss"
 import { getSpeechToTextCompletion } from "api";
 import Lottie from "lottie-react";
 import gradientHaloAnim from "assets/animations/gradiant-halo.json";
@@ -13,7 +14,7 @@ const apiConfig = {
   url: "https://api.d-id.com",
   key: "YWJoaW5hdmEuc2FueWFsMTZAZ21haWwuY29t:-ykxOgaaLcZSCw-W8Po6z",
 };
-export const AvatarUi = () => {
+export const AvatarUi = ({isShrinked, onShrink}) => {
   // refs
   const talkVideo = useRef();
   const idleVideo = useRef();
@@ -345,6 +346,9 @@ export const AvatarUi = () => {
     };
   }, []);
 
+  useEffect(() => {
+    console.log("useEffect:::isShrinked:::", isShrinked);
+  },isShrinked);
   function createBlobURL(data) {
     const blob = new Blob([data], { type: "audio/mpeg" });
     const url = window.URL.createObjectURL(blob);
@@ -433,6 +437,8 @@ export const AvatarUi = () => {
       });
   };
 
+
+  console.log("isShrinked:::", isShrinked);
   return (
     <div className="chat-container">
       <div
@@ -441,6 +447,7 @@ export const AvatarUi = () => {
           backgroundImage: `url(${Background})`,
           backgroundPosition: "center top",
         }}
+        className={`${isShrinked ? "shrinked" : ""}`}
       >
         <Lottie
           animationData={gradientHaloAnim}
