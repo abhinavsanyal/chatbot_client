@@ -12,24 +12,31 @@ export const Chats = () => {
   const chatStore = useSelector((state) => state.chat);
   const user = useSelector((state) => state.auth.user.user);
 
+  React.useEffect(() => {
+    const chatScroll = document.getElementById("chat-scroll");
+    if (!chatScroll) return;
+    chatScroll.scrollTo(0, chatScroll.scrollHeight);
+  }, [chatStore.chat_data]);
+
   return (
     <Box
+      id="chat-scroll"
       sx={{
         display: "flex",
         flexDirection: "row",
         justifyContent: "center",
         width: "100%",
         overflow: "auto",
-        pb:2,
+        pb: 2,
       }}
     >
       <Box
         sx={{
           display: "flex",
           flexDirection: "column",
-          gap: 2,
           width: "100%",
           maxWidth: "800px",
+          marginRight: "60px",
         }}
       >
         {chatStore?.chat_data?.map((chatData) => (
@@ -37,39 +44,62 @@ export const Chats = () => {
             sx={{
               display: "flex",
               flexDirection: "row",
-              width: "100%",
-              gap: 2,
             }}
           >
             {chatData?.sender === "ME" ? (
-              <Avatar
+              <Box
                 sx={{
-                  bgcolor: deepOrange[500],
-                  width: "25px",
-                  height: "25px",
-                  fontSize: "12px",
+                  display: "flex",
+                  flexDirection: "row",
+                  gap: "16px",
+                  paddingBottom: "20px",
                 }}
               >
-                {user?.name?.length ? user.name[0] : null}
-              </Avatar>
+                <Avatar
+                  sx={{
+                    bgcolor: deepOrange[500],
+                    width: "25px",
+                    height: "25px",
+                    fontSize: "12px",
+                  }}
+                >
+                  {user?.name?.length ? user.name[0] : null}
+                </Avatar>
+                <Box
+                  sx={{
+                    paddingBottom: "10px",
+                  }}
+                >
+                  {chatData?.text || ""}
+                </Box>
+              </Box>
             ) : (
               <Box
                 sx={{
-                  marginLeft: 3,
+                  display: "flex",
+                  flexDirection: "row",
+                  marginBottom: "60px",
+                  width: "100%",
                 }}
-              />
+              >
+                <Box
+                  sx={{
+                    marginLeft: "40px",
+                  }}
+                />
+                <Card sx={{ width: "100%" }}>
+                  <CardContent>
+                    <Typography
+                      sx={{ fontSize: 14 }}
+                      color="text.secondary"
+                      gutterBottom
+                    >
+                      {chatData?.text || ""}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Box>
             )}
-            <Card>
-              <CardContent>
-                <Typography
-                  sx={{ fontSize: 14 }}
-                  color="text.secondary"
-                  gutterBottom
-                >
-                  {chatData?.text || ""}
-                </Typography>
-              </CardContent>
-            </Card>
           </Box>
         ))}
       </Box>
