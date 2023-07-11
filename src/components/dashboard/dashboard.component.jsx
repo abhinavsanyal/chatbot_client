@@ -7,7 +7,8 @@ import { SideNav } from "../side-nav/side-nav.component";
 import { AvatarUi } from "../avatar-ui/avatar-ui.component";
 import { SearchBar } from "../search-bar/search-bar.component";
 import { Chats } from "../chats/chats.components";
-
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -60,7 +61,7 @@ export const Dashboard = () => {
   const onExpand = () => {
     setIsShrinked(false);
   };
-
+  const notify = () => toast("Wow so easy!");
   const onShrink = () => {
     setIsShrinked(true);
   };
@@ -69,13 +70,7 @@ export const Dashboard = () => {
     // use formData to send file to server using createEmbeddingsAndIngestToVectorDB
     const formData = new FormData();
     formData.append("file", file);
-    createEmbeddingsAndIngestToVectorDB(formData)
-      .then((res) => {
-        console.log("res", res);
-      })
-      .catch((err) => {
-        console.log("err", err);
-      });
+    return createEmbeddingsAndIngestToVectorDB(formData);
   };
 
   const toggleIsAddDocument = () => {
@@ -106,6 +101,7 @@ export const Dashboard = () => {
             name="example-upload"
             maxSize={300000}
             onUpload={uploadFileToServer}
+            notify={notify}
             label="Upload Files"
           />
         </Box>
@@ -137,6 +133,18 @@ export const Dashboard = () => {
           <AvatarUi onShrink={onShrink} isShrinked={isShrinked} />
           <Chats />
           <SearchBar />
+          <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="dark"
+          />
         </Box>
       )}
     </Box>

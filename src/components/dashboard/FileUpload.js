@@ -130,7 +130,7 @@ const FilePreview = ({ data, onRemove, onUpload }) => {
   );
 };
 
-const FileUpload = ({ maxSize, name, multiple, label, onUpload }) => {
+const FileUpload = ({ maxSize, name, multiple, label, onUpload, notify }) => {
   const [fileList, setFileList] = useState([]);
   const [hoverState, setHoverState] = useState(null);
   const inputRef = useRef();
@@ -165,6 +165,7 @@ const FileUpload = ({ maxSize, name, multiple, label, onUpload }) => {
       throw new Error("No file size");
     }
     return onUpload(file).then(() => {
+    //   notify();
       removeItem(index);
     });
   };
@@ -247,7 +248,7 @@ const FileUpload = ({ maxSize, name, multiple, label, onUpload }) => {
       >
         Ingest into knowledge base
       </Button>
-      <div className="pb-4"/ >
+      <div className="pb-4" />
       <div className={styles.previews}>
         {fileList.map((file, index) => (
           <FilePreview
