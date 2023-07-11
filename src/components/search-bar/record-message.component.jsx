@@ -5,7 +5,7 @@ import MicAnimation from "assets/animations/mic-animation.json";
 import Lottie from "lottie-react";
 import KeyboardVoiceIcon from "@mui/icons-material/KeyboardVoice";
 import SettingsVoiceIcon from "@mui/icons-material/SettingsVoice";
-import { getSpeechToTextCompletion } from "../../api";
+import { getSpeechToTextCompletion, getTextToTextCompletion } from "../../api";
 
 export const RecordMessage = () => {
   const dispatch = useDispatch();
@@ -18,8 +18,12 @@ export const RecordMessage = () => {
       const blob = await blobRes.blob();
       const formData = new FormData();
       formData.append("file", blob, "myFile.wav");
-      const assistantTextResult = await getSpeechToTextCompletion(formData);
+      const userTextResult = await getSpeechToTextCompletion(formData);
+      dispatch(setChatData(userTextResult));
+
+      const assistantTextResult = await getTextToTextCompletion(userTextResult?.user_text);
       dispatch(setChatData(assistantTextResult));
+
     } catch (error) {
       console.log("Unable to record audio : ", error);
     } finally {

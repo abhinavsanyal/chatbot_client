@@ -18,7 +18,12 @@ const chatSlice = createSlice({
         sender: "BOT",
         text: action.payload?.completion_text || "",
       };
-      state.chat_data.push(myMessage, botMessage);
+
+      action.payload?.user_text && action.payload?.user_text != "" 
+        && state.chat_data.push(myMessage);
+
+      action.payload?.completion_text && action.payload?.completion_text != "" 
+        && state.chat_data.push(botMessage);
     },
     setIsFetchingAnswers: (state, action) => {
       state.is_fetching_answers = action.payload;

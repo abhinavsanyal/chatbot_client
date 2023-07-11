@@ -13,7 +13,7 @@ import { MessageBox } from "react-chat-elements";
 // import RecordMessage from "./record-message.component";
 const apiConfig = {
   url: "https://api.d-id.com",
-  key: "YWJoaW5hdmEuc2FueWFsMTZAZ21haWwuY29t:-ykxOgaaLcZSCw-W8Po6z",
+  key: "cmFodWwua3VtYXJAc2xlZWsuY29t:gjit4ImreN072cbizFLYP",
 };
 
 export const AvatarUi = ({ isShrinked, onShrink }) => {
@@ -414,7 +414,7 @@ export const AvatarUi = ({ isShrinked, onShrink }) => {
   useEffect(() => {
     if (chatStore.chat_data?.length) {
       const latestMsg = chatStore.chat_data?.at(-1);
-      if (latestMsg?.text) handleTalkButtonClick(latestMsg?.text);
+      if ( latestMsg?.sender == "BOT" && latestMsg?.text) handleTalkButtonClick(latestMsg?.text);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chatStore.chat_data]);
