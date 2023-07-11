@@ -1,56 +1,56 @@
+import React, { useState, useEffect, useRef } from "react";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
 
-
-import React, { useState, useEffect, useRef } from 'react';
-import "./file-upload.styled.scss"
+import "./file-upload.styled.scss";
 
 const styles = {
-    inputWrapper: 'input-wrapper',
-    inputCover: 'input-cover',
-    helpText: 'help-text',
-    fileName: 'file-name',
-    fileNameStretch: 'file-name spacer',
-    fileExt: 'file-ext',
-    fileDrag: 'file-drag',
-    input: 'input',
-    loader: 'loader',
-    disabled: 'disabled',
-    loading: 'loading',
-    loaderItem: 'loader-item',
-    spacer: 'spacer',
-    button: 'button',
-    hover: 'hover',
-    imagePreview: 'image-preview',
-    preview: 'preview',
-    previewItem: 'preview-item',
-    previews: 'previews'
-  };
-const uploadFileToServer = (file) => {
-  const delay = file.size/100; 
-  return new Promise((resolve,reject)=> {
-    setTimeout(()=>{
-          resolve();
-    }, delay);
-  });
+  inputWrapper: "input-wrapper",
+  inputCover: "input-cover",
+  helpText: "help-text",
+  fileName: "file-name",
+  fileNameStretch: "file-name spacer",
+  fileExt: "file-ext",
+  fileDrag: "file-drag",
+  input: "input",
+  loader: "loader",
+  disabled: "disabled",
+  loading: "loading",
+  loaderItem: "loader-item",
+  spacer: "spacer",
+  button: "button",
+  hover: "hover",
+  imagePreview: "image-preview",
+  preview: "preview",
+  previewItem: "preview-item",
+  previews: "previews",
 };
 
 const getExtFromType = (type) => {
-  const parts = type.split('/');
+  const parts = type.split("/");
   return parts[parts.length - 1];
 };
 const getExtFromName = (name) => {
-  const parts = name.split('.');
+  const parts = name.split(".");
   return parts[parts.length - 1];
 };
 
 const Loader = () => {
-  return <div className={styles.loader}>
-    <span className={styles.loaderItem}/>
-    <span className={styles.loaderItem}/>
-    <span className={styles.loaderItem}/>
-  </div>
-}
+  return (
+    <div className={styles.loader}>
+      <span className={styles.loaderItem} />
+      <span className={styles.loaderItem} />
+      <span className={styles.loaderItem} />
+    </div>
+  );
+};
 
-const FilePreview = ({data, onRemove, onUpload}) => {
+const FilePreview = ({ data, onRemove, onUpload }) => {
   const [loading, setLoading] = useState(true);
   const [src, setSrc] = useState(null);
   const [type, setType] = useState(null);
@@ -60,16 +60,19 @@ const FilePreview = ({data, onRemove, onUpload}) => {
       return;
     }
     const reader = new FileReader();
-    const fileType = file.type.match('text') ? 'text' :
-                     file.type.match('image') ? 'image' : file.type;
+    const fileType = file.type.match("text")
+      ? "text"
+      : file.type.match("image")
+      ? "image"
+      : file.type;
     setType(fileType);
     reader.onload = (e) => {
       setSrc(e.target.result);
       setLoading(false);
-    }
-    if (fileType === 'text') {
+    };
+    if (fileType === "text") {
       reader.readAsText(file);
-    } else if (fileType === 'image') {
+    } else if (fileType === "image") {
       reader.readAsDataURL(file);
     } else {
       setSrc(false);
@@ -81,38 +84,63 @@ const FilePreview = ({data, onRemove, onUpload}) => {
     loadData(data);
   }, [data]);
 
-  const classes = [
-    styles.previewItem, 
-    data.loading ? styles.disabled:''
-  ].join(' ').trim();
+  const classes = [styles.previewItem, data.loading ? styles.disabled : ""]
+    .join(" ")
+    .trim();
 
   return (
-    <div className={classes}>
-      {data.loading && <Loader />}
-      {loading ? 'loading data...' : null}
-      {!loading && !data.loading && (
-        type === 'text' ? <pre className={styles.preview}>{src}</pre> :
-        type === 'image' ? <img alt='preview' src={src} className={styles.imagePreview}/> :
-        <pre className={styles.preview}>no preview</pre>
-      )}
-      <div className={styles.fileNameStretch}>{data.name}</div>
-      <button className={styles.button} onClick={onRemove}>remove</button>
-      <button className={styles.button} onClick={onUpload}>upload</button>
-    </div>
+    <Card sx={{ marginBottom: "10px" }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          padding: "10px 5px",
+          alignItems: "center",
+        }}
+      >
+        {data.loading && <Loader />}
+        {loading ? "loading data..." : null}
+        {!loading &&
+          !data.loading &&
+          (type === "text" ? (
+            <pre className={styles.preview}>{src}</pre>
+          ) : type === "image" ? (
+            <img alt="preview" src={src} className={styles.imagePreview} />
+          ) : (
+            <pre className={styles.preview}>no preview</pre>
+          ))}
+        <div className={styles.fileNameStretch}>{data.name}</div>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            gap: 2,
+          }}
+        >
+          <Button variant="outlined" onClick={onRemove}>
+            remove
+          </Button>
+
+          <Button variant="outlined" onClick={onUpload}>
+            upload
+          </Button>
+        </Box>
+      </Box>
+    </Card>
   );
 };
 
-const FileUpload = ({maxSize, name, multiple, label, onUpload}) => {
+const FileUpload = ({ maxSize, name, multiple, label, onUpload }) => {
   const [fileList, setFileList] = useState([]);
   const [hoverState, setHoverState] = useState(null);
   const inputRef = useRef();
 
   const handleDragOver = (e) => {
-    if ('preventDefault' in e) {
+    if ("preventDefault" in e) {
       e.stopPropagation();
       e.preventDefault();
     }
-    setHoverState(e.type === 'dragover' ? styles.hover : null);
+    setHoverState(e.type === "dragover" ? styles.hover : null);
   };
 
   const handleFileSelect = (e) => {
@@ -120,9 +148,9 @@ const FileUpload = ({maxSize, name, multiple, label, onUpload}) => {
     const files = e.target.files || e.dataTransfer.files;
     setFileList(Array.from(files));
   };
-  
+
   const removeItem = (index) => {
-    setFileList(prevFileList => {
+    setFileList((prevFileList) => {
       const newFileList = [...prevFileList];
       newFileList.splice(index, 1);
       return newFileList;
@@ -133,8 +161,8 @@ const FileUpload = ({maxSize, name, multiple, label, onUpload}) => {
     const newFileList = [...fileList];
     newFileList[index].loading = true;
     setFileList(newFileList);
-    if (typeof file === 'file' || !('size' in file)) {
-      throw new Error('No file size');
+    if (typeof file === "file" || !("size" in file)) {
+      throw new Error("No file size");
     }
     return onUpload(file).then(() => {
       removeItem(index);
@@ -146,59 +174,88 @@ const FileUpload = ({maxSize, name, multiple, label, onUpload}) => {
     inputRef.current.click(e);
   };
 
-  const dragClasses = [
-    styles.fileDrag,
-    hoverState
-  ].join(' ').trim();
+  const dragClasses = [styles.fileDrag, hoverState].join(" ").trim();
 
-  const fileExt = fileList.length === 1 ?
-    (fileList[0].type ? `.${getExtFromType(fileList[0].type)}` : `.${getExtFromName(fileList[0].name)}`) :
-    null;
-  
-  const fileNames = fileList.length > 1 ? `${fileList.length} Files` :
-    fileList.length === 1 ? fileList[0].name.replace(fileExt, '') :
-    'No file chosen';
+  const fileExt =
+    fileList.length === 1
+      ? fileList[0].type
+        ? `.${getExtFromType(fileList[0].type)}`
+        : `.${getExtFromName(fileList[0].name)}`
+      : null;
+
+  const fileNames =
+    fileList.length > 1
+      ? `${fileList.length} Files`
+      : fileList.length === 1
+      ? fileList[0].name.replace(fileExt, "")
+      : "No file chosen";
 
   return (
     <div>
-      <input type='hidden' name={`${name}:maxSize`} value={maxSize} />
-      <label>
-        <span>{label}</span>
-        <div className={dragClasses}
-             onDragOver={handleDragOver}
-             onDragLeave={handleDragOver}
-             onDrop={handleFileSelect}>
-          <div className={styles.inputWrapper}>
-            <input type='file'
-                   tabIndex='-1'
-                   ref={inputRef}
-                   className={styles.input}
-                   name={name} 
-                   multiple={multiple}
-                   onChange={handleFileSelect}/>
-            <div className={styles.inputCover}>
-              <button className={styles.button}
-                      type='button'
-                      onClick={selectFile}>
-                Choose Files</button>
-              <span className={styles.fileName}>{fileNames}</span>
-              {fileExt && <span className={styles.fileExt}>{fileExt}</span>}
-            </div>
-          </div>
-          <span className={styles.helpText}>or drop files here</span>
-        </div>
-      </label>
-      <button className={styles.button}
-              type='button'
-              onClick={() => fileList.forEach((file, index) => uploadFile(file, index))}>
-        Upload All
-      </button>
+      <input type="hidden" name={`${name}:maxSize`} value={maxSize} />
+      <Card
+        onDragOver={handleDragOver}
+        onDragLeave={handleDragOver}
+        onDrop={handleFileSelect}
+        sx={{ maxWidth: 600, marginBottom: "60px" }}
+      >
+        <CardContent>
+          <Typography sx={{ fontSize: 14 }} color="text.secondary">
+            <input
+              type="file"
+              tabIndex="-1"
+              ref={inputRef}
+              className={styles.input}
+              name={name}
+              multiple={multiple}
+              onChange={handleFileSelect}
+            />
+          </Typography>
+          <Typography variant="h5" component="div">
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                gap: "40px",
+                alignItems: "center",
+              }}
+            >
+              <Button type="button" variant="outlined" onClick={selectFile}>
+                Choose Files
+              </Button>
+              <Typography>
+                {fileNames}
+                {fileExt}
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                paddingTop: "40px",
+              }}
+            >
+              <Typography>or drop files here</Typography>
+            </Box>
+          </Typography>
+        </CardContent>
+      </Card>
+      <Button
+        type="button"
+        variant="outlined"
+        onClick={() =>
+          fileList.forEach((file, index) => uploadFile(file, index))
+        }
+      >
+        Ingest into knowledge base
+      </Button>
+      <div className="pb-4"/ >
       <div className={styles.previews}>
         {fileList.map((file, index) => (
-          <FilePreview key={index} 
-                       data={file} 
-                       onRemove={() => removeItem(index)}
-                       onUpload={() => uploadFile(file, index)}/>
+          <FilePreview
+            key={index}
+            data={file}
+            onRemove={() => removeItem(index)}
+            onUpload={() => uploadFile(file, index)}
+          />
         ))}
       </div>
     </div>
@@ -206,10 +263,3 @@ const FileUpload = ({maxSize, name, multiple, label, onUpload}) => {
 };
 
 export default FileUpload;
-
-// const app = document.getElementById('app');
-// render(<FileUpload multiple={true} 
-//                    name='example-upload'
-//                    maxSize={300000}
-//                    onUpload={uploadFileToServer}
-//                    label='Upload Files'/>, app)
