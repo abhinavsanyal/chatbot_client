@@ -396,14 +396,14 @@ export const AvatarUi = ({ isShrinked, onShrink }) => {
       };
       // || "https://athena-yantra.s3.ap-south-1.amazonaws.com/ElevenLabs_2023-03-26T07_26_55.000Z_Bella_kZtqR5Rk3rFH0BlwQV7s.mp3",
       try {
-        const response = await fetch(
-          `${apiConfig.url}/talks/streams/${streamId}`,
-          options
-        );
-        const jsonResponse = await response.json();
-        console.log("current response duration:--", jsonResponse.duration);
+        // const response = await fetch(
+        //   `${apiConfig.url}/talks/streams/${streamId}`,
+        //   options
+        // );
+        // const jsonResponse = await response.json();
+        // console.log("current response duration:--", jsonResponse.duration);
         // setTimeToIdleState( talkVideo.current.currentTime + jsonResponse.duration);
-        setTimeToIdleStateRefState(jsonResponse.duration);
+        // setTimeToIdleStateRefState(jsonResponse.duration);
       } catch (error) {
         console.error("Error while creating a talk stream:", error);
       }

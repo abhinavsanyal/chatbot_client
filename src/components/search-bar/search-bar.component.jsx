@@ -20,6 +20,8 @@ export const SearchBar = () => {
   const getTextToTextChats = async (event) => {
     event.preventDefault();
     try {
+      setSearchTerm("");
+      dispatch(setChatData({ user_text: searchTerm }));
       dispatch(setIsFetchingAnswers(true));
       const res = await getTextToTextCompletion(searchTerm);
       dispatch(setChatData(res));
