@@ -17,7 +17,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
 import HistoryIcon from "@mui/icons-material/History";
-import AddIcon from '@mui/icons-material/Add';
+import AddIcon from "@mui/icons-material/Add";
 import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
 import { deepOrange } from "@mui/material/colors";
@@ -112,7 +112,7 @@ const Profile = ({ user, openProfilePopUp, setOpenProfilePopUp }) => {
   );
 };
 
-export const SideNav = ({toggleIsAddDocument}) => {
+export const SideNav = ({ toggleIsAddDocument }) => {
   const user = useSelector((state) => state.auth.user.user);
   const dispatch = useDispatch();
   const handleLogout = () => {
@@ -129,7 +129,7 @@ export const SideNav = ({toggleIsAddDocument}) => {
         openProfilePopUp={openProfilePopUp}
         setOpenProfilePopUp={setOpenProfilePopUp}
       />
-    
+
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
           {open && (
@@ -191,9 +191,12 @@ export const SideNav = ({toggleIsAddDocument}) => {
                   />
                 </ListItemButton>
               </ListItem>
-              <ListItem disablePadding sx={{ display: "block" }} onClick={toggleIsAddDocument} >
+              <ListItem
+                disablePadding
+                sx={{ display: "block" }}
+                onClick={toggleIsAddDocument}
+              >
                 <ListItemButton
-                  onClick={() => setOpenProfilePopUp(true)}
                   sx={{
                     minHeight: 48,
                     justifyContent: open ? "initial" : "center",
@@ -217,7 +220,6 @@ export const SideNav = ({toggleIsAddDocument}) => {
               </ListItem>
               <ListItem disablePadding sx={{ display: "block" }}>
                 <ListItemButton
-                  onClick={() => setOpenProfilePopUp(true)}
                   sx={{
                     minHeight: 48,
                     justifyContent: open ? "initial" : "center",

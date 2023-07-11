@@ -12,7 +12,7 @@ export default instance;
 // export const loginUserWithGoogle = async (email, password) => {
 //   try {
 //      await instance.get("api/auth/google");
-   
+
 //   } catch (error) {
 //     throw error;
 //   }
@@ -24,7 +24,9 @@ export const loginUser = async (email, password) => {
       password,
     });
     if (response.data.token) {
-      instance.defaults.headers.common["Authorization"] = `Bearer ${response.data.token}`;
+      instance.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${response.data.token}`;
     } else {
       delete instance.defaults.headers.common["Authorization"];
     }
@@ -49,7 +51,9 @@ export const registerUser = async (name, email, password) => {
       password,
     });
     if (response.data.token) {
-      instance.defaults.headers.common["Authorization"] = `Bearer ${response.data.token}`;
+      instance.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${response.data.token}`;
     } else {
       delete instance.defaults.headers.common["Authorization"];
     }
@@ -71,7 +75,12 @@ export const getLLMs = async () => {
 };
 
 // Eleven Labs voice tts routes
-export const getTextToSpeech = async (message, stability, similarity_boost, voiceId) => {
+export const getTextToSpeech = async (
+  message,
+  stability,
+  similarity_boost,
+  voiceId
+) => {
   try {
     instance.defaults.headers.common["Content-Type"] = "audio/mpeg";
 
@@ -104,8 +113,26 @@ export const getSpeechToTextCompletion = async (audio) => {
       audio,
       {
         headers: {
-          "Content-Type": "audio/mpeg", 
-        }
+          "Content-Type": "audio/mpeg",
+        },
+      }
+    );
+    // console.log("response raw :-", response);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getTextToTextCompletion = async (text) => {
+  try {
+    const response = await instance.post(
+      "api/chat/text-completion",
+      { message: text },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
       }
     );
     console.log("response raw :-", response);
@@ -113,22 +140,18 @@ export const getSpeechToTextCompletion = async (audio) => {
   } catch (error) {
     throw error;
   }
-}
+};
 
 export const createEmbeddingsAndIngestToVectorDB = async (formData) => {
   try {
-    const response = await instance.post(
-      "api/injestion/injest",
-      formData,
-      {
-        headers: {
-          "Content-Type": "form-data",
-        }
-      }
-    );
+    const response = await instance.post("api/injestion/injest", formData, {
+      headers: {
+        "Content-Type": "form-data",
+      },
+    });
     console.log("response raw :-", response);
     return response.data;
   } catch (error) {
     throw error;
   }
-}
+};
