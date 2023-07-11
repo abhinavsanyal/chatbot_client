@@ -24,14 +24,6 @@ const styles = {
     previewItem: 'preview-item',
     previews: 'previews'
   };
-const uploadFileToServer = (file) => {
-  const delay = file.size/100; 
-  return new Promise((resolve,reject)=> {
-    setTimeout(()=>{
-          resolve();
-    }, delay);
-  });
-};
 
 const getExtFromType = (type) => {
   const parts = type.split('/');
@@ -191,7 +183,7 @@ const FileUpload = ({maxSize, name, multiple, label, onUpload}) => {
       <button className={styles.button}
               type='button'
               onClick={() => fileList.forEach((file, index) => uploadFile(file, index))}>
-        Upload All
+        Ingest into knowledge base
       </button>
       <div className={styles.previews}>
         {fileList.map((file, index) => (

@@ -13,6 +13,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import FileUpload from "./FileUpload";
+import { createEmbeddingsAndIngestToVectorDB } from "api";
 
 export const CompanySelector = () => {
   const appConfigStore = useSelector((state) => state.appConfig);
@@ -59,8 +60,22 @@ export const Dashboard = () => {
   const onExpand = () => {
     setIsShrinked(false);
   };
+
   const onShrink = () => {
     setIsShrinked(true);
+  };
+
+  const uploadFileToServer = (file) => {
+    // use formData to send file to server using createEmbeddingsAndIngestToVectorDB
+    const formData = new FormData();
+    formData.append("file", file);
+    createEmbeddingsAndIngestToVectorDB(formData)
+      .then((res) => {
+        console.log("res", res);
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
   };
 
   const toggleIsAddDocument = () => {
@@ -86,7 +101,13 @@ export const Dashboard = () => {
             height: "100vh",
           }}
         >
-          <FileUpload />
+          <FileUpload
+            multiple={true}
+            name="example-upload"
+            maxSize={300000}
+            onUpload={uploadFileToServer}
+            label="Upload Files"
+          />
         </Box>
       )}
 
