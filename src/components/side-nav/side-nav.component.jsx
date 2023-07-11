@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useSelector } from "react-redux";
 import { setUser as setUserAction } from "reducers/authSlice";
+import { clearChat } from "reducers/chat-slice";
 import { useDispatch } from "react-redux";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
@@ -118,6 +119,9 @@ export const SideNav = ({ toggleIsAddDocument }) => {
   const handleLogout = () => {
     dispatch(setUserAction(null));
   };
+  const clearChats = () => {
+    dispatch(clearChat());
+  };
 
   const [open, setOpen] = React.useState(true);
   const [openProfilePopUp, setOpenProfilePopUp] = React.useState(false);
@@ -218,7 +222,11 @@ export const SideNav = ({ toggleIsAddDocument }) => {
                   />
                 </ListItemButton>
               </ListItem>
-              <ListItem disablePadding sx={{ display: "block" }}>
+              <ListItem
+                disablePadding
+                sx={{ display: "block" }}
+                onClick={clearChats}
+              >
                 <ListItemButton
                   sx={{
                     minHeight: 48,
@@ -236,7 +244,7 @@ export const SideNav = ({ toggleIsAddDocument }) => {
                     <HistoryIcon />
                   </ListItemIcon>
                   <ListItemText
-                    primary={`Chat History`}
+                    primary={`Clear Chat`}
                     sx={{ opacity: open ? 1 : 0 }}
                   />
                 </ListItemButton>

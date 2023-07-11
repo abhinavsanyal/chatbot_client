@@ -19,18 +19,24 @@ const chatSlice = createSlice({
         text: action.payload?.completion_text || "",
       };
 
-      action.payload?.user_text && action.payload?.user_text != "" 
-        && state.chat_data.push(myMessage);
+      action.payload?.user_text &&
+        action.payload?.user_text != "" &&
+        state.chat_data.push(myMessage);
 
-      action.payload?.completion_text && action.payload?.completion_text != "" 
-        && state.chat_data.push(botMessage);
+      action.payload?.completion_text &&
+        action.payload?.completion_text != "" &&
+        state.chat_data.push(botMessage);
     },
     setIsFetchingAnswers: (state, action) => {
       state.is_fetching_answers = action.payload;
     },
+    clearChat: (state, action) => {
+      state.chat_data = [];
+    },
   },
 });
 
-export const { setChatData, setIsFetchingAnswers } = chatSlice.actions;
+export const { setChatData, setIsFetchingAnswers, clearChat } =
+  chatSlice.actions;
 export const chatStore = (state) => state.chatSlice;
 export default chatSlice.reducer;

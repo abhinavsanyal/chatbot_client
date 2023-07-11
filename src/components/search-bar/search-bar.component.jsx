@@ -33,9 +33,7 @@ export const SearchBar = () => {
 
   return (
     <>
-      {chatStore?.is_fetching_answers && (
-        <LinearProgress color="secondary" sx={{ height: 12 }} />
-      )}
+      {chatStore?.is_fetching_answers && <LinearProgress color="secondary" />}
       <Container
         maxWidth="md"
         sx={{
