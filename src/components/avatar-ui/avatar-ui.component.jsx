@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
 import Background from "assets/images/bg.png";
 // import RecordMessage from "./record-message.component";
 // import "./video-chat.styled.scss";
+import "./avatar-ui.styled.scss";
 import { getSpeechToTextCompletion } from "api";
 import Lottie from "lottie-react";
 import gradientHaloAnim from "assets/animations/gradiant-halo.json";
@@ -13,7 +15,8 @@ const apiConfig = {
   url: "https://api.d-id.com",
   key: "YWJoaW5hdmEuc2FueWFsMTZAZ21haWwuY29t:-ykxOgaaLcZSCw-W8Po6z",
 };
-export const AvatarUi = () => {
+
+export const AvatarUi = ({ isShrinked, onShrink }) => {
   // refs
   const talkVideo = useRef();
   const idleVideo = useRef();
@@ -345,6 +348,9 @@ export const AvatarUi = () => {
     };
   }, []);
 
+  useEffect(() => {
+    console.log("useEffect:::isShrinked:::", isShrinked);
+  }, isShrinked);
   function createBlobURL(data) {
     const blob = new Blob([data], { type: "audio/mpeg" });
     const url = window.URL.createObjectURL(blob);
@@ -404,35 +410,27 @@ export const AvatarUi = () => {
     }
   };
 
-  const handleStop = async (blobUrl) => {
-    setIsLoading(true);
+  const chatStore = useSelector((state) => state.chat);
+  useEffect(() => {
+    if (chatStore.chat_data?.length) {
+      const latestMsg = chatStore.chat_data?.at(-1);
+      if (latestMsg?.text) handleTalkButtonClick(latestMsg?.text);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chatStore.chat_data]);
 
-    // Append recorded message to messages
+  const appConfigStore = useSelector((state) => state.appConfig);
+  useEffect(() => {
+    console.log({ selected_company: appConfigStore?.selected_company });
+    if (appConfigStore?.selected_company) {
+      handleTalkButtonClick(
+        `Now you have switched to ${appConfigStore?.selected_company} company`
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [appConfigStore.selected_company]);
 
-    // convert blob url to blob object
-    fetch(blobUrl)
-      .then((res) => res.blob())
-      .then(async (blob) => {
-        // Construct audio to send file
-        const formData = new FormData();
-        formData.append("file", blob, "myFile.wav");
-        const assistantTextResult = await getSpeechToTextCompletion(formData);
-        const myMessage = { sender: "me", text: assistantTextResult.user_text };
-        const messagesArr = [...messages, myMessage];
-
-        // Append to audio
-        const rachelMessage = {
-          sender: "rachel",
-          text: assistantTextResult.completion_text,
-        };
-        messagesArr.push(rachelMessage);
-
-        setMessages(messagesArr);
-        handleTalkButtonClick(assistantTextResult.completion_text);
-        setIsLoading(false);
-      });
-  };
-
+  console.log("isShrinked:::", isShrinked);
   return (
     <div className="chat-container">
       <div
@@ -441,6 +439,7 @@ export const AvatarUi = () => {
           backgroundImage: `url(${Background})`,
           backgroundPosition: "center top",
         }}
+        className={`${isShrinked ? "shrinked" : ""}`}
       >
         <Lottie
           animationData={gradientHaloAnim}
@@ -469,77 +468,6 @@ export const AvatarUi = () => {
             playsInline
             autoPlay
           />
-        </div>
-      </div>
-      {/* <div className="px-5" style={{ marginTop: "1rem" }}>
-        {messages?.map((message, index) => {
-          return (
-            <div
-              key={index + message.sender}
-              className={
-                "flex flex-col " +
-                (message.sender == "rachel" && "flex items-end")
-              }
-            >
-              <div className="mt-4 ">
-                <p
-                  className={
-                    message.sender !== "rachel"
-                      ? "text-right mr-2 italic text-green-500"
-                      : "ml-2 italic text-blue-500"
-                  }
-                >
-                  {message.sender}
-                </p>
-                {console.log("controller:-", message)}
-
-                <MessageBox
-                  position={message.sender === "me" ? "right" : "left"}
-                  type={"text"}
-                  style={{
-                    width: "100%",
-                    marginTop: "30px",
-                    backdropFilter: "saturate(150%) blur(12px)",
-                    filter: "saturate(200%) blur(30px)",
-                  }}
-                  text={
-                    <div
-                      className="flex flex-col"
-                      style={{ whiteSpace: "pre-wrap" }}
-                    >
-                      <p className="text-sm" style={{ whiteSpace: "pre-wrap" }}>
-                        {message.text}
-                      </p>
-                    </div>
-                  }
-                />
-              </div>
-            </div>
-          );
-        })}
-        
-        {messages.length == 0 && !isLoading && (
-          <div className="text-center font-light italic mt-10">
-            Send Rachel a message...
-          </div>
-        )}
-
-        {isLoading && (
-          <div className="text-center font-light italic mt-10 animate-pulse">
-            Gimme a few seconds...
-          </div>
-        )}
-      </div> */}
-      <div
-        style={{
-          height: "107px",
-          overflowY: "hidden",
-        }}
-        className="flex inset-x-0 bottom-0 w-full pt-6 mb-30 mx-2 justify-start items-center"
-      >
-        {/* <ChatInputBox handleStop={handleStop} /> */}
-        <div className="flex justify-center items-center w-full">
-          {/* <RecordMessage handleStop={handleStop} /> */}
         </div>
       </div>
     </div>

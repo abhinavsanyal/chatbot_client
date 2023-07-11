@@ -114,3 +114,21 @@ export const getSpeechToTextCompletion = async (audio) => {
     throw error;
   }
 }
+
+export const createEmbeddingsAndIngestToVectorDB = async (formData) => {
+  try {
+    const response = await instance.post(
+      "api/injestion/injest",
+      formData,
+      {
+        headers: {
+          "Content-Type": "form-data",
+        }
+      }
+    );
+    console.log("response raw :-", response);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
