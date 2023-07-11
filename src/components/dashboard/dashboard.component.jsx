@@ -3,9 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { setCompany } from "reducers/app-config-slice";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-
 import { SideNav } from "../side-nav/side-nav.component";
 import { AvatarUi } from "../avatar-ui/avatar-ui.component";
 import { SearchBar } from "../search-bar/search-bar.component";
