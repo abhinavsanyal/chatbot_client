@@ -15,6 +15,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import FileUpload from "./FileUpload";
 
 export const CompanySelector = () => {
   const appConfigStore = useSelector((state) => state.appConfig);
@@ -57,6 +58,7 @@ export const CompanySelector = () => {
 
 export const Dashboard = () => {
   const [isShrinked, setIsShrinked] = React.useState(false);
+  const [isAddDocument, setIsAddDocument] = React.useState(false);
   const onExpand = () => {
     setIsShrinked(false);
   };
@@ -64,27 +66,48 @@ export const Dashboard = () => {
     setIsShrinked(true);
   };
 
+  const toggleIsAddDocument = () => {
+    setIsAddDocument(!isAddDocument);
+  };
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       {/* Side navigation panel */}
-      <SideNav />
+      <SideNav toggleIsAddDocument={toggleIsAddDocument} />
       {/* Main right container */}
 
-      <Box
-        component="main"
-        sx={{
-          display: "flex",
-          p: 2,
-          flexDirection: "column",
-          justifyContent: "space-between",
-          width: "100%",
-          height: "100vh",
-        }}
-      >
-        <CompanySelector />
-        {/* <AvatarUi /> */}
-        {/* <Button
+      {isAddDocument && (
+        <Box
+          component="main"
+          sx={{
+            display: "flex",
+            p: 2,
+            flexDirection: "column",
+            justifyContent: "space-between",
+            width: "100%",
+            height: "100vh",
+          }}
+        >
+          <FileUpload />
+        </Box>
+      )}
+
+      {!isAddDocument && (
+        <Box
+          component="main"
+          sx={{
+            display: "flex",
+            p: 2,
+            flexDirection: "column",
+            justifyContent: "space-between",
+            width: "100%",
+            height: "100vh",
+          }}
+        >
+          <CompanySelector />
+          {/* <AvatarUi /> */}
+          {/* <Button
           variant="outlined"
           onClick={() => {
             setIsShrinked(!isShrinked);
@@ -93,10 +116,11 @@ export const Dashboard = () => {
           {isShrinked ? "Expand" : "Shrink"}
         </Button> */}
 
-        <AvatarUi onShrink={onShrink} isShrinked={isShrinked} />
-        <Chats />
-        <SearchBar />
-      </Box>
+          <AvatarUi onShrink={onShrink} isShrinked={isShrinked} />
+          <Chats />
+          <SearchBar />
+        </Box>
+      )}
     </Box>
   );
 };

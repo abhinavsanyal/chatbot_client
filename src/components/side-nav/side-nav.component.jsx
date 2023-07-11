@@ -17,6 +17,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
 import HistoryIcon from "@mui/icons-material/History";
+import AddIcon from '@mui/icons-material/Add';
 import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
 import { deepOrange } from "@mui/material/colors";
@@ -111,7 +112,7 @@ const Profile = ({ user, openProfilePopUp, setOpenProfilePopUp }) => {
   );
 };
 
-export const SideNav = () => {
+export const SideNav = ({toggleIsAddDocument}) => {
   const user = useSelector((state) => state.auth.user.user);
   const dispatch = useDispatch();
   const handleLogout = () => {
@@ -186,6 +187,30 @@ export const SideNav = () => {
                   </ListItemIcon>
                   <ListItemText
                     primary={`My Profile` || ""}
+                    sx={{ opacity: open ? 1 : 0 }}
+                  />
+                </ListItemButton>
+              </ListItem>
+              <ListItem disablePadding sx={{ display: "block" }} onClick={toggleIsAddDocument} >
+                <ListItemButton
+                  onClick={() => setOpenProfilePopUp(true)}
+                  sx={{
+                    minHeight: 48,
+                    justifyContent: open ? "initial" : "center",
+                    px: 2.5,
+                  }}
+                >
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 3 : "auto",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <AddIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={`Add Documents`}
                     sx={{ opacity: open ? 1 : 0 }}
                   />
                 </ListItemButton>
