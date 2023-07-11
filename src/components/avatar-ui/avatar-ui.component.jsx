@@ -357,8 +357,28 @@ export const AvatarUi = ({ isShrinked, onShrink }) => {
     return url;
   }
 
+  const chatStore = useSelector((state) => state.chat);
+  useEffect(() => {
+    if (chatStore.chat_data?.length) {
+      const latestMsg = chatStore.chat_data?.at(-1);
+      if (latestMsg?.sender == "BOT" && latestMsg?.text)
+        handleTalkButtonClick(latestMsg?.text);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chatStore.chat_data]);
+
+  const appConfigStore = useSelector((state) => state.appConfig);
+  useEffect(() => {
+    if (appConfigStore?.selected_company) {
+      handleTalkButtonClick(
+        `Now you have switched to ${appConfigStore?.selected_company} company`
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [appConfigStore.selected_company]);
+
   const handleTalkButtonClick = async (completionText) => {
-    console.log("handleTalkButtonClick:::", peerConnection);
+    if (!appConfigStore?.ai_sound) return;
     if (
       peerConnection?.signalingState === "stable" ||
       peerConnection?.iceConnectionState === "connected"
@@ -396,39 +416,21 @@ export const AvatarUi = ({ isShrinked, onShrink }) => {
       };
       // || "https://athena-yantra.s3.ap-south-1.amazonaws.com/ElevenLabs_2023-03-26T07_26_55.000Z_Bella_kZtqR5Rk3rFH0BlwQV7s.mp3",
       try {
-        // const response = await fetch(
-        //   `${apiConfig.url}/talks/streams/${streamId}`,
-        //   options
-        // );
-        // const jsonResponse = await response.json();
-        // console.log("current response duration:--", jsonResponse.duration);
-        // setTimeToIdleState( talkVideo.current.currentTime + jsonResponse.duration);
-        // setTimeToIdleStateRefState(jsonResponse.duration);
+        const response = await fetch(
+          `${apiConfig.url}/talks/streams/${streamId}`,
+          options
+        );
+        const jsonResponse = await response.json();
+        console.log("current response duration:--", jsonResponse.duration);
+        setTimeToIdleState(
+          talkVideo.current.currentTime + jsonResponse.duration
+        );
+        setTimeToIdleStateRefState(jsonResponse.duration);
       } catch (error) {
         console.error("Error while creating a talk stream:", error);
       }
     }
   };
-
-  const chatStore = useSelector((state) => state.chat);
-  useEffect(() => {
-    if (chatStore.chat_data?.length) {
-      const latestMsg = chatStore.chat_data?.at(-1);
-      if ( latestMsg?.sender == "BOT" && latestMsg?.text) handleTalkButtonClick(latestMsg?.text);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chatStore.chat_data]);
-
-  const appConfigStore = useSelector((state) => state.appConfig);
-  useEffect(() => {
-    console.log({ selected_company: appConfigStore?.selected_company });
-    if (appConfigStore?.selected_company) {
-      handleTalkButtonClick(
-        `Now you have switched to ${appConfigStore?.selected_company} company`
-      );
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [appConfigStore.selected_company]);
 
   console.log("isShrinked:::", isShrinked);
   return (

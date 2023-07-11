@@ -2,6 +2,7 @@ import * as React from "react";
 import { useSelector } from "react-redux";
 import { setUser as setUserAction } from "reducers/authSlice";
 import { clearChat } from "reducers/chat-slice";
+import { toggleAiSound } from "reducers/app-config-slice";
 import { useDispatch } from "react-redux";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
@@ -29,6 +30,8 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
+import VolumeUpIcon from "@mui/icons-material/VolumeUp";
+import VolumeOffIcon from "@mui/icons-material/VolumeOff";
 
 const drawerWidth = 255;
 
@@ -115,12 +118,16 @@ const Profile = ({ user, openProfilePopUp, setOpenProfilePopUp }) => {
 
 export const SideNav = ({ toggleIsAddDocument }) => {
   const user = useSelector((state) => state.auth.user.user);
+  const appConfig = useSelector((state) => state.appConfig);
   const dispatch = useDispatch();
   const handleLogout = () => {
     dispatch(setUserAction(null));
   };
   const clearChats = () => {
     dispatch(clearChat());
+  };
+  const toggleSound = () => {
+    dispatch(toggleAiSound());
   };
 
   const [open, setOpen] = React.useState(true);
@@ -245,6 +252,33 @@ export const SideNav = ({ toggleIsAddDocument }) => {
                   </ListItemIcon>
                   <ListItemText
                     primary={`Clear Chat`}
+                    sx={{ opacity: open ? 1 : 0 }}
+                  />
+                </ListItemButton>
+              </ListItem>
+              <ListItem
+                disablePadding
+                sx={{ display: "block" }}
+                onClick={toggleSound}
+              >
+                <ListItemButton
+                  sx={{
+                    minHeight: 48,
+                    justifyContent: open ? "initial" : "center",
+                    px: 2.5,
+                  }}
+                >
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 3 : "auto",
+                      justifyContent: "center",
+                    }}
+                  >
+                    {appConfig?.ai_sound ? <VolumeUpIcon /> : <VolumeOffIcon />}
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={`AI's audio`}
                     sx={{ opacity: open ? 1 : 0 }}
                   />
                 </ListItemButton>
