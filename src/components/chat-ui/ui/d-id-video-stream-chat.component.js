@@ -11,7 +11,7 @@ import ChatInputBox from "./chat-input.component";
 // import RecordMessage from "./record-message.component";
 const apiConfig = {
   url: "https://api.d-id.com",
-  key: "cmFodWwua3VtYXJAc2xlZWsuY29t:gjit4ImreN072cbizFLYP",
+  key: "YWJoaW5hdmEuc2FueWFsMTZAZ21haWwuY29t:i70xkcPaE8Umjhbyj0fjk",
 };
 const VideoChatComponent = () => {
   // refs
