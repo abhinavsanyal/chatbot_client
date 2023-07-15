@@ -13,7 +13,7 @@ import { MessageBox } from "react-chat-elements";
 // import RecordMessage from "./record-message.component";
 const apiConfig = {
   url: "https://api.d-id.com",
-  key: "cmFodWwua3VtYXJAc2xlZWsuY29t:gjit4ImreN072cbizFLYP",
+  key: "YWJoaW5hdmEuc2FueWFsMTZAZ21haWwuY29t:i70xkcPaE8Umjhbyj0fjk",
 };
 
 export const AvatarUi = ({ isShrinked, onShrink }) => {
